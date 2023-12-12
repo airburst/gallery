@@ -8,8 +8,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Photos by Mark",
-  description: "Fairhursts.net",
+  title: "Lakeland Photos",
+  description: "lakeland.app",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

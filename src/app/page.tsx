@@ -7,6 +7,7 @@ import "yet-another-react-lightbox/styles.css";
 // TODO: fetch image urls from DB
 import slides from "./slides";
 import { useState } from "react";
+import Header from "@/components/Header";
 
 export default function HomePage() {
   const [index, setIndex] = useState<number>(0);
@@ -21,9 +22,7 @@ export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center bg-slate-50">
       <div className="container flex flex-col items-center justify-center">
-        <h1 className="py-4 text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          Photos
-        </h1>
+        <Header />
 
         <Masonry
           items={slides}
