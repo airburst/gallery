@@ -56,11 +56,3 @@ export const getImageProps = ({
     alt,
   };
 };
-
-// <style>
-//   img.gallery {
-//     background-color: var(--color-text-muted);
-//     object-fit: cover;
-//     /* border-radius: 5px; */
-//   }
-// </style>
