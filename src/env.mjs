@@ -12,11 +12,15 @@ export const env = createEnv({
       .url()
       .refine(
         (str) => !str.includes("YOUR_MYSQL_URL_HERE"),
-        "You forgot to change the default URL"
+        "You forgot to change the default URL",
       ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    PROJECT_ID: z.string(),
+    CLIENT_EMAIL: z.string(),
+    PRIVATE_KEY: z.string(),
+    BUCKET_NAME: z.string(),
   },
 
   /**
@@ -35,6 +39,10 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
+    PROJECT_ID: process.env.PROJECT_ID,
+    CLIENT_EMAIL: process.env.CLIENT_EMAIL,
+    PRIVATE_KEY: process.env.PRIVATE_KEY,
+    BUCKET_NAME: process.env.BUCKET_NAME,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
