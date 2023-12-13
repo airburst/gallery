@@ -30,8 +30,8 @@ export default function Page() {
     if (response.ok) {
       const { url, fields }: { url: string; fields: Record<string, string> } =
         await response.json();
-
       const formData = new FormData();
+
       Object.entries(fields).forEach(([key, value]) => {
         formData.append(key, value);
       });

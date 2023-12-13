@@ -35,9 +35,6 @@ dependencies:
   react-plock:
     specifier: ^3.0.2
     version: 3.0.2(react@18.2.0)
-  uuid:
-    specifier: ^9.0.1
-    version: 9.0.1
   yet-another-react-lightbox:
     specifier: ^3.15.6
     version: 3.15.6(react-dom@18.2.0)(react@18.2.0)
