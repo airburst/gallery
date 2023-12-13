@@ -36,9 +36,10 @@ export default function HomePage() {
               className="cursor-pointer hover:shadow-lg"
               key={item.src}
               src={item.src}
+              loader={imageKitLoader}
               width={400}
               height={300}
-              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 320px, 320px"
+              // sizes="(max-width: 640px) 100vw, (max-width: 1280px) 320px, 320px"
               alt={"Lakeland picture"}
               onClick={() => handleImageClick(item.src)}
             />

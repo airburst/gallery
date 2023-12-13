@@ -18,7 +18,7 @@ export type ImageProps = Omit<ImageKitProps, "quality"> & {
   "data-src"?: string;
 };
 
-const getImageKitUrl = ({ src, width, quality }: ImageKitProps): string => {
+const imageKitLoader = ({ src, width, quality }: ImageKitProps): string => {
   if (src.startsWith("/")) src = src.slice(1);
 
   const params = [];
@@ -46,7 +46,7 @@ export const getImageProps = ({
 }: ImageKitProps): ImageProps => {
   const imageKitUrl: string = lazy
     ? (EMPTY_IMAGE as string)
-    : getImageKitUrl({ src, width, quality, alt });
+    : imageKitLoader({ src, width, quality, alt });
 
   return {
     src: imageKitUrl,
