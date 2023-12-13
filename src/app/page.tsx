@@ -8,6 +8,7 @@ import "yet-another-react-lightbox/styles.css";
 import slides from "./slides";
 import { useState } from "react";
 import Header from "@/components/Header";
+import { imageKitLoader } from "@/services/ImageKit";
 
 export default function HomePage() {
   const [index, setIndex] = useState<number>(0);

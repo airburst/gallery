@@ -1,60 +1,59 @@
-'use client'
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+"use client";
 
-import { useState } from 'react'
+import { useState } from "react";
 
 // https://github.com/vercel/examples/blob/main/solutions/aws-s3-image-upload/app/globals.css
 
 export default function Page() {
-  const [file, setFile] = useState<File | null>(null)
-  const [uploading, setUploading] = useState(false)
+  const [file, setFile] = useState<File | undefined>(undefined);
+  const [uploading, setUploading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!file) {
-      alert('Please select a file to upload.')
-      return
+      alert("Please select a file to upload.");
+      return;
     }
 
-    setUploading(true)
+    setUploading(true);
 
-    const response = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + '/api/upload',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ filename: file.name, contentType: file.type }),
-      }
-    )
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filename: file.name, contentType: file.type }),
+    });
 
     if (response.ok) {
-      const { url, fields } = await response.json()
+      const { url, fields }: { url: string; fields: Record<string, string> } =
+        await response.json();
 
-      const formData = new FormData()
+      const formData = new FormData();
       Object.entries(fields).forEach(([key, value]) => {
-        formData.append(key, value as string)
-      })
-      formData.append('file', file)
+        formData.append(key, value);
+      });
+      formData.append("file", file);
 
       const uploadResponse = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         body: formData,
-      })
+      });
 
       if (uploadResponse.ok) {
-        alert('Upload successful!')
+        alert("Upload successful!");
       } else {
-        console.error('S3 Upload Error:', uploadResponse)
-        alert('Upload failed.')
+        console.error("S3 Upload Error:", uploadResponse);
+        alert("Upload failed.");
       }
     } else {
-      alert('Failed to get pre-signed URL.')
+      alert("Failed to get pre-signed URL.");
     }
 
-    setUploading(false)
-  }
+    setUploading(false);
+  };
 
   return (
     <main>
@@ -64,9 +63,9 @@ export default function Page() {
           id="file"
           type="file"
           onChange={(e) => {
-            const files = e.target.files
+            const files = e.target.files;
             if (files) {
-              setFile(files[0])
+              setFile(files[0]);
             }
           }}
           accept="image/png, image/jpeg"
@@ -76,5 +75,5 @@ export default function Page() {
         </button>
       </form>
     </main>
-  )
+  );
 }

@@ -1,24 +1,22 @@
-import { EMPTY_IMAGE, IMAGE_KIT_URL } from "@/constants";
+import { EMPTY_IMAGE } from "@/constants";
 
 export type ImageKitProps = {
   src: string;
   width?: number;
   height?: number;
   quality?: number;
-  alt: string;
+  alt?: string;
   lazy?: boolean;
   "data-src"?: string;
 };
 
-export type ImageProps = Omit<ImageKitProps, "quality"> & {
-  src: string;
-  width?: number;
-  height?: number;
-  lazy?: boolean;
-  "data-src"?: string;
-};
+export type ImageProps = Omit<ImageKitProps, "quality">;
 
-const imageKitLoader = ({ src, width, quality }: ImageKitProps): string => {
+export const imageKitLoader = ({
+  src,
+  width,
+  quality,
+}: ImageKitProps): string => {
   if (src.startsWith("/")) src = src.slice(1);
 
   const params = [];
@@ -32,7 +30,8 @@ const imageKitLoader = ({ src, width, quality }: ImageKitProps): string => {
 
   const paramsString = params.join(",");
 
-  return `${IMAGE_KIT_URL}/${src}?tr=${paramsString}`;
+  return `${src}?tr=${paramsString}`;
+  // return `${IMAGE_KIT_URL}/${src}?tr=${paramsString}`;
 };
 
 // Return props to render in Next/Image component
