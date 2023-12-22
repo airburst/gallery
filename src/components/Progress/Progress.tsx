@@ -1,5 +1,3 @@
-import { type CSSProperties } from "react";
-
 type ProgressProps = {
   value: number;
   max: number;
@@ -19,17 +17,10 @@ export const Progress = ({ value, max }: ProgressProps) => {
   const val = Math.floor((total / max) * actual);
 
   return (
-    <header className="progress__container">
-      <label htmlFor="progress">
-        {actual} of {max}
-      </label>
-      <progress
-        id="progress"
-        className="progress__bar"
-        max={total}
-        value={val}
-        style={{ "--progress-value": `${val}%` } as CSSProperties}
-      />
-    </header>
+    <progress
+      className="progress progress-secondary w-full"
+      value={val}
+      max={total}
+    ></progress>
   );
 };

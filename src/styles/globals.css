@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  font-family: var(--font-inter);
+}
+
+:root {
+  --fallback-bc: rgba(15, 118, 110, 0.1);
+}
