@@ -1,103 +1,33 @@
-export default function Upload() {
-  // const uploadPhoto = async (e) => {
-  //   const file: File = e.target.files[0];
-  //   const filename = encodeURIComponent(file.name);
-  //   const res = await fetch(`/api/upload-url?file=${filename}`);
-  //   const { url, fields } = await res.json();
-  //   const formData = new FormData();
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 
-  //   Object.entries({ ...fields, file }).forEach(([key, value]) => {
-  //     formData.append(key, value);
-  //   });
+export const UploadDropzone = () => {
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    acceptedFiles.forEach((file) => {
+      const reader = new FileReader();
 
-  //   const upload = await fetch(url, {
-  //     method: "POST",
-  //     body: formData,
-  //   });
+      reader.onabort = () => console.log("file reading was aborted");
+      reader.onerror = () => console.log("file reading has failed");
+      reader.onload = () => {
+        // Do whatever you want with the file contents
+        const binaryStr = reader.result;
+        console.log(binaryStr);
+      };
+      reader.readAsArrayBuffer(file);
+    });
+  }, []);
 
-  //   if (upload.ok) {
-  //     console.log("Uploaded successfully!");
-  //   } else {
-  //     console.error("Upload failed.");
-  //   }
-  // };
-
-  const uploadPhoto = console.log;
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <>
-      <p>Upload a .png or .jpg image (max 1MB).</p>
-      <input
-        onChange={uploadPhoto}
-        type="file"
-        accept="image/png, image/jpeg"
-      />
-    </>
+    <div
+      {...getRootProps({ className: "dropzone" })}
+      className="flex h-32 w-full cursor-grab items-center justify-center rounded border-2 border-dashed border-neutral-300 text-neutral-400 hover:bg-neutral-200"
+    >
+      <input {...getInputProps()} />
+      <p>Drag and drop some files here, or click to select files</p>
+    </div>
   );
-}
-
-// import { Storage } from '@google-cloud/storage';
-
-// async function uploadFilesToGCS(bucketName: string, files: Express.Multer.File[]) {
-//   /**
-//    * This function uploads multiple files to a Google Cloud Storage bucket.
-//    *
-//    * Parameters:
-//    * bucketName (string): The name of the bucket to upload the files to.
-//    * files (Express.Multer.File[]): An array of files to upload.
-//    *
-//    * Returns:
-//    * Promise<string[]>: A promise that resolves to an array of URLs for the uploaded files.
-//    */
-//   try {
-//     // Create a new storage client
-//     const storage = new Storage();
-
-//     // Get the bucket to upload the files to
-//     const bucket = storage.bucket(bucketName);
-
-//     // Create an array to store the uploaded file URLs
-//     const uploadedFileUrls: string[] = [];
-
-//     // Loop through each file and upload it to the bucket
-//     for (const file of files) {
-//       // Create a new file object in the bucket
-//       const gcsFileName = `${Date.now()}-${file.originalname}`;
-//       const gcsFile = bucket.file(gcsFileName);
-
-//       // Create a write stream to write the file to the bucket
-//       const stream = gcsFile.createWriteStream({
-//         metadata: {
-//           contentType: file.mimetype,
-//         },
-//       });
-
-//       // Pipe the file data to the write stream
-//       stream.end(file.buffer);
-
-//       // Wait for the file to finish uploading
-//       await new Promise((resolve, reject) => {
-//         stream.on('finish', resolve);
-//         stream.on('error', reject);
-//       });
-
-//       // Get the URL for the uploaded file
-//       const [url] = await gcsFile.getSignedUrl({
-//         action: 'read',
-//         expires: '03-17-2025',
-//       });
-
-//       // Add the URL to the array of uploaded file URLs
-//       uploadedFileUrls.push(url);
-//     }
-
-//     // Return the array of uploaded file URLs
-//     return uploadedFileUrls;
-//   } catch (error) {
-//     // Log the error
-//     console.error(error);
-
-//     // Return an empty array
-//     return [];
-//   }
-// }
+};

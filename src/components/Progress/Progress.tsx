@@ -11,14 +11,14 @@ const calcVal = (min: number, max: number, value: number) => {
 };
 
 export const Progress = ({ value, max }: ProgressProps) => {
-  const min = 1;
+  const min = 0;
   const total = 100;
   const actual = calcVal(min, max, value);
   const val = Math.floor((total / max) * actual);
 
   return (
     <progress
-      className="progress progress-secondary w-full"
+      className="progress progress-primary w-full"
       value={val}
       max={total}
     ></progress>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Progress } from "@/components/Progress";
+import { Previews } from "@/components/Upload/Previews";
 import axios, { type AxiosProgressEvent, type AxiosRequestConfig } from "axios";
 import type { NextPage } from "next";
 import Image from "next/image";
@@ -42,17 +43,6 @@ const Home: NextPage = () => {
     e.currentTarget.type = "file";
   };
 
-  // const onCancelFile = (e: MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   if (!previewUrl && !file) {
-  //     return;
-  //   }
-  //   setFile(null);
-  //   setPreviewUrl(null);
-  // };
-
-  // const onUploadFile = async (e: MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -102,7 +92,7 @@ const Home: NextPage = () => {
 
       await axios.post<{
         data: {
-          url: string | string[];
+          url: string;
         };
       }>(url, formData, options);
 
@@ -125,7 +115,7 @@ const Home: NextPage = () => {
           >
             <div className="flex-flex-col pb-4">
               {previewUrl ? (
-                <div className="flex flex-row items-center gap-4 rounded bg-white p-2 shadow-lg">
+                <div className="flex flex-row items-center gap-8 rounded bg-white p-2 shadow-lg">
                   <Image
                     className="rounded"
                     alt="file uploader preview"
@@ -168,10 +158,12 @@ const Home: NextPage = () => {
 
             {!uploading && (
               <button className="btn btn-primary" type="submit">
-                Upload
+                UPLOAD
               </button>
             )}
           </form>
+
+          <Previews />
         </div>
       </main>
     </div>
