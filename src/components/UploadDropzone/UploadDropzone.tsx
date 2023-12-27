@@ -1,25 +1,21 @@
+import { Button } from "@/components/ui/button";
+import { CameraIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Thumbs, type FileWithPreview } from "./Thumbs";
 
-export const UploadDropzone = () => {
+type UploadDropzoneProps = {
+  onUpload?: (files: File[]) => void;
+  uploadProgress?: Record<string, number>;
+};
+
+export const UploadDropzone = ({
+  onUpload,
+  uploadProgress,
+}: UploadDropzoneProps) => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-
-  // const onDrop = (acceptedFiles: File[]) => {
-  //   acceptedFiles.forEach((file) => {
-  //     const reader = new FileReader();
-
-  //     reader.onabort = () => console.log("file reading was aborted");
-  //     reader.onerror = () => console.log("file reading has failed");
-  //     reader.onload = () => {
-  //       // Do whatever you want with the file contents
-  //       const binaryStr = reader.result;
-  //       console.log(binaryStr);
-  //     };
-  //     reader.readAsArrayBuffer(file);
-  //   });
-  // };
+  const hasFiles = files?.length > 0;
 
   const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
     // Disable click and keydown behavior
@@ -51,37 +47,32 @@ export const UploadDropzone = () => {
 
   // Set styles
   const classes = clsx(
-    "cursor-grab  rounded border-2 border-dashed border-neutral-300 text-neutral-400",
+    "cursor-grab rounded border-4 border-dashed border-neutral-300 text-neutral-400",
     isDragActive && "border-red-500",
   );
 
   return (
     <section className="flex flex-col">
-      <div {...getRootProps()} className={classes}>
-        <input {...getInputProps()} />
-        <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-16 w-16"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
-            />
-          </svg>
-          <p className="p-2">Drag and drop photos to upload</p>
-          <button className="btn btn-primary" type="button" onClick={open}>
-            Or click to select files
-          </button>
+      {!hasFiles && (
+        <div {...getRootProps()} className={classes}>
+          <input {...getInputProps()} />
+          <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
+            <CameraIcon className="h-16 w-16" />
+            <p className="p-2">
+              Drag and drop photos to upload (10MB max file size)
+            </p>
+            <Button onClick={open}>Or click to select files</Button>
+          </div>
         </div>
-      </div>
+      )}
 
-      <Thumbs files={files} />
+      {hasFiles && (
+        <Button className="self-center" onClick={() => onUpload?.(files)}>
+          Upload Photos
+        </Button>
+      )}
+
+      <Thumbs files={files} uploadProgress={uploadProgress} />
     </section>
   );
 };

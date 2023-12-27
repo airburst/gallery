@@ -1,9 +1,6 @@
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-import baseTheme from "./src/themes/base.cjs";
-
 export default {
   content: ["./src/**/*.tsx"],
   theme: {
@@ -13,8 +10,5 @@ export default {
       },
     },
   },
-  daisyui: {
-    themes: [{ baseTheme }, "dark"],
-  },
-  plugins: [require("@tailwindcss/forms"), require("daisyui")],
+  plugins: [require("@tailwindcss/forms")],
 } satisfies Config;
