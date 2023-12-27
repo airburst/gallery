@@ -6,9 +6,7 @@ import type { NextPage } from "next";
 import { useState } from "react";
 
 const Home: NextPage = () => {
-  const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState<Record<string, number>>({});
-  console.log("🚀 ~ file: page.tsx:11 ~ progress:", progress);
 
   const uploadFile = async (file: File) => {
     // Get pre-signed url from AWS S3
@@ -44,19 +42,18 @@ const Home: NextPage = () => {
           const t = total ?? 1;
           const percentage = (loaded * 100) / t;
 
-          setProgress({ ...progress, [file.name]: +percentage.toFixed(2) });
+          setProgress((prevProgress) => ({
+            ...prevProgress,
+            [file.name]: +percentage.toFixed(2),
+          }));
         },
       };
-
-      setUploading(true);
 
       await axios.post<{
         data: {
           url: string;
         };
       }>(url, formData, options);
-
-      setUploading(false);
 
       // TODO: Toast with success
     } catch (e: unknown) {
@@ -73,9 +70,7 @@ const Home: NextPage = () => {
     <div>
       <main className="py-10">
         <div className="mx-auto w-full max-w-3xl px-3">
-          {!uploading && (
-            <UploadDropzone onUpload={uploadFiles} uploadProgress={progress} />
-          )}
+          <UploadDropzone onUpload={uploadFiles} uploadProgress={progress} />
         </div>
       </main>
     </div>

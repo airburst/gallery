@@ -44,7 +44,6 @@ export const Thumbs = ({ files, uploadProgress }: ThumbsProps) => {
                     <TrashIcon className="h-8 w-8" />
                   </Button>
                 </div>
-                {/*  */}
               </div>
             </>
           )}
