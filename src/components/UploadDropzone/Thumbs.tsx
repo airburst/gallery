@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { formatFileSize } from "@/utils";
+import { formatFileSize } from "@/utils/general";
 import { TrashIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 
@@ -19,7 +19,7 @@ export const Thumbs = ({ files, uploadProgress }: ThumbsProps) => {
     const progress = uploadProgress?.[file.name] ?? 0;
 
     return (
-      <div className="border-b-2 py-2 text-neutral-700" key={file.name}>
+      <div className="border-b py-2 text-neutral-700" key={file.name}>
         <div className="flex flex-row items-center gap-8 rounded">
           {file.preview && (
             <>

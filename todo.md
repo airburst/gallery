@@ -2,13 +2,18 @@
 
 ## Upload
 
-- Refactor API routes into server actions
-- Test that multiple files upload
-- Add bin icon after upload to allow delete
-- Error handling
-- Add Toast messages
+- Throttle concurrency
 - Get Exif data from pictures
+- Add Toast messages
+- Error handling
 - Link back to main page to view pictures
+- Cancel upload
+
+## Auth
+
+- Login with Auth0
+- Only users can upload (guard routes)
+- Save owner data with pictures
 
 ## Database
 
@@ -21,11 +26,4 @@
 
 ## Gallery
 
-- Shad CDN
 - Sort by date, most recent
-
-## Auth
-
-- Login with Auth0
-- Only users can upload (guard routes)
-- Save owner data with pictures

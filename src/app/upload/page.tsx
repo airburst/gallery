@@ -1,6 +1,7 @@
 "use client";
 
 import { UploadDropzone } from "@/components/UploadDropzone/UploadDropzone";
+import batch, { type ActionParams } from "@/utils/batch";
 import axios, { type AxiosProgressEvent, type AxiosRequestConfig } from "axios";
 import type { NextPage } from "next";
 import { useState } from "react";
@@ -8,8 +9,8 @@ import { useState } from "react";
 const Home: NextPage = () => {
   const [progress, setProgress] = useState<Record<string, number>>({});
 
-  const uploadFile = async (file: File) => {
-    // Get pre-signed url from AWS S3
+  // Get a signed url from AWS and then upload file to bucket
+  const uploadFile = async (file: File): Promise<void> => {
     const response = await fetch("/api/upload", {
       method: "POST",
       headers: {
@@ -63,7 +64,9 @@ const Home: NextPage = () => {
   };
 
   const uploadFiles = async (files: File[]) => {
-    await Promise.all(files.map(uploadFile));
+    // Use TaskQueue to throttle one file at a time
+    const action = (args: ActionParams) => uploadFile(args.record as File);
+    await batch(1)({ records: files, action });
   };
 
   return (
