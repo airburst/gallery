@@ -4,10 +4,13 @@ import { UploadDropzone } from "@/components/UploadDropzone/UploadDropzone";
 import batch, { type ActionParams } from "@/utils/batch";
 import axios, { type AxiosProgressEvent, type AxiosRequestConfig } from "axios";
 import type { NextPage } from "next";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Home: NextPage = () => {
+  const [isUploading, setIsUploading] = useState<boolean>(false);
   const [progress, setProgress] = useState<Record<string, number>>({});
+  const router = useRouter();
 
   // Get a signed url from AWS and then upload file to bucket
   const uploadFile = async (file: File): Promise<void> => {
@@ -64,16 +67,23 @@ const Home: NextPage = () => {
   };
 
   const uploadFiles = async (files: File[]) => {
+    setIsUploading(true);
     // Use TaskQueue to throttle one file at a time
     const action = (args: ActionParams) => uploadFile(args.record as File);
     await batch(1)({ records: files, action });
+    setIsUploading(false);
+    router.push("/");
   };
 
   return (
     <div>
       <main className="py-10">
         <div className="mx-auto w-full max-w-3xl px-3">
-          <UploadDropzone onUpload={uploadFiles} uploadProgress={progress} />
+          <UploadDropzone
+            onUpload={uploadFiles}
+            uploadProgress={progress}
+            isUploading={isUploading}
+          />
         </div>
       </main>
     </div>

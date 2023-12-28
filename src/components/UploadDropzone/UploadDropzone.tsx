@@ -1,16 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Button } from "@/components/ui/button";
-import { CameraIcon } from "@radix-ui/react-icons";
+import { CameraIcon, ReloadIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Thumbs, type FileWithPreview } from "./Thumbs";
 
 type UploadDropzoneProps = {
+  isUploading: boolean;
   onUpload?: (files: File[]) => void;
   uploadProgress?: Record<string, number>;
 };
 
 export const UploadDropzone = ({
+  isUploading,
   onUpload,
   uploadProgress,
 }: UploadDropzoneProps) => {
@@ -45,6 +48,12 @@ export const UploadDropzone = ({
       });
   }, [files]);
 
+  const handleUpload = () => {
+    if (!isUploading) {
+      onUpload?.(files);
+    }
+  };
+
   // Set styles
   const classes = clsx(
     "cursor-grab rounded border-4 border-dashed border-neutral-300 text-neutral-400",
@@ -67,7 +76,12 @@ export const UploadDropzone = ({
       )}
 
       {hasFiles && (
-        <Button className="self-center" onClick={() => onUpload?.(files)}>
+        <Button
+          className="self-center"
+          onClick={handleUpload}
+          disabled={isUploading}
+        >
+          {isUploading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
           Upload Photos
         </Button>
       )}

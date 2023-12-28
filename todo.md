@@ -2,11 +2,9 @@
 
 ## Upload
 
-- Throttle concurrency
 - Get Exif data from pictures
 - Add Toast messages
 - Error handling
-- Link back to main page to view pictures
 - Cancel upload
 
 ## Auth

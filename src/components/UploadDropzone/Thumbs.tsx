@@ -1,7 +1,8 @@
-import { Button } from "@/components/ui/button";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+// import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { formatFileSize } from "@/utils/general";
-import { TrashIcon } from "@radix-ui/react-icons";
+// import { TrashIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 
 export interface FileWithPreview extends File {
@@ -15,8 +16,15 @@ type ThumbsProps = {
 };
 
 export const Thumbs = ({ files, uploadProgress }: ThumbsProps) => {
+  const [animationParent] = useAutoAnimate();
+
   const thumbs = files.map((file) => {
     const progress = uploadProgress?.[file.name] ?? 0;
+    const isUploaded = progress === 100;
+
+    if (isUploaded) {
+      return null;
+    }
 
     return (
       <div className="border-b py-2 text-neutral-700" key={file.name}>
@@ -33,7 +41,7 @@ export const Thumbs = ({ files, uploadProgress }: ThumbsProps) => {
                 />
                 <div className="flex flex-1 flex-col truncate">{file.name}</div>
                 <div className="flex flex-col">{formatFileSize(file.size)}</div>
-                <div className="flex flex-col">
+                {/* <div className="flex flex-col">
                   <Button
                     variant="ghost"
                     size="icon"
@@ -43,7 +51,7 @@ export const Thumbs = ({ files, uploadProgress }: ThumbsProps) => {
                   >
                     <TrashIcon className="h-8 w-8" />
                   </Button>
-                </div>
+                </div> */}
               </div>
             </>
           )}
@@ -53,5 +61,9 @@ export const Thumbs = ({ files, uploadProgress }: ThumbsProps) => {
     );
   });
 
-  return <aside className="mt-4 flex flex-col">{thumbs}</aside>;
+  return (
+    <aside ref={animationParent} className="mt-4 flex flex-col">
+      {thumbs}
+    </aside>
+  );
 };
