@@ -2,7 +2,6 @@
 
 ## Upload
 
-- Get Exif data from pictures
 - Add Toast messages
 - Error handling
 - Cancel upload
@@ -24,4 +23,5 @@
 
 ## Gallery
 
+- Display uploaded photos (ImageKit link)
 - Sort by date, most recent

@@ -62,7 +62,10 @@ export const Thumbs = ({ files, uploadProgress }: ThumbsProps) => {
   });
 
   return (
-    <aside ref={animationParent} className="mt-4 flex flex-col">
+    <aside
+      ref={animationParent}
+      className="mx-auto mt-4 flex w-full max-w-3xl flex-col"
+    >
       {thumbs}
     </aside>
   );

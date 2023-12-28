@@ -1,6 +1,7 @@
 "use client";
 
 import { UploadDropzone } from "@/components/UploadDropzone/UploadDropzone";
+import { readExif } from "@/server/exif";
 import batch, { type ActionParams } from "@/utils/batch";
 import axios, { type AxiosProgressEvent, type AxiosRequestConfig } from "axios";
 import type { NextPage } from "next";
@@ -14,6 +15,9 @@ const Home: NextPage = () => {
 
   // Get a signed url from AWS and then upload file to bucket
   const uploadFile = async (file: File): Promise<void> => {
+    const tags = await readExif(file);
+    console.log("🚀 ~ file: page.tsx:19 ~ uploadFile ~ tags:", tags); // FIXME:
+
     const response = await fetch("/api/upload", {
       method: "POST",
       headers: {
@@ -76,16 +80,12 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div>
-      <main className="py-10">
-        <div className="mx-auto w-full max-w-3xl px-3">
-          <UploadDropzone
-            onUpload={uploadFiles}
-            uploadProgress={progress}
-            isUploading={isUploading}
-          />
-        </div>
-      </main>
+    <div className="mx-auto w-full max-w-3xl px-3">
+      <UploadDropzone
+        onUpload={uploadFiles}
+        uploadProgress={progress}
+        isUploading={isUploading}
+      />
     </div>
   );
 };

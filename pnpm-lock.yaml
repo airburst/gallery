@@ -44,6 +44,9 @@ dependencies:
   drizzle-orm:
     specifier: ^0.29.1
     version: 0.29.1(@planetscale/database@1.11.0)(mysql2@3.6.5)
+  exifreader:
+    specifier: ^4.19.1
+    version: 4.19.1
   next:
     specifier: ^14.0.4
     version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -2494,6 +2497,13 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
+  /@xmldom/xmldom@0.8.10:
+    resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
+    engines: {node: '>=10.0.0'}
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
     engines: {node: '>=6.5'}
@@ -3743,6 +3753,13 @@ packages:
   /event-target-shim@5.0.1:
     resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
     engines: {node: '>=6'}
+    dev: false
+
+  /exifreader@4.19.1:
+    resolution: {integrity: sha512-0201S8XZ4SEZH23ce7PG3THvNplLcgapItRMf9JIuKu19slZ7FINLoUrl2SijwVg00Ly1pB6mXdzKwObSF937A==}
+    requiresBuild: true
+    optionalDependencies:
+      '@xmldom/xmldom': 0.8.10
     dev: false
 
   /exit-hook@2.2.1:
