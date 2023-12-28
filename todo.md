@@ -1,11 +1,5 @@
 # TODO
 
-## Upload
-
-- Add Toast messages
-- Error handling
-- Cancel upload
-
 ## Auth
 
 - Login with Auth0
@@ -25,3 +19,9 @@
 
 - Display uploaded photos (ImageKit link)
 - Sort by date, most recent
+
+## Upload
+
+- Add Toast messages
+- Error handling
+- Cancel upload

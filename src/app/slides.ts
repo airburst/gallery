@@ -1,8 +1,8 @@
 const slides = [
   {
-    src: "https://ik.imagekit.io/mfimages/lakes/lakes-2011-001.jpg",
-    width: 1200,
-    height: 800,
+    src: "https://ik.imagekit.io/mfimages/lakeland/formentor.jpg",
+    // width: 1200,
+    // height: 800,
   },
   {
     src: "https://ik.imagekit.io/mfimages/lakes/lakes-2011-002.jpg",
